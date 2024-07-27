@@ -5,13 +5,13 @@
 
 using namespace std;
 
-class Transaction {
+class Transacao {
 protected:
     double montante;
     string descricao;
 
 public:
-    Transaction(double amt, const string &des) {
+    Transacao(double amt, const string &des) {
         montante = amt;
         descricao = des;
     }
@@ -21,23 +21,23 @@ public:
     }
 };
 
-class Entrada : public Transaction {
+class Entrada : public Transacao {
 public:
-    Entrada(double amt, const string &des) : Transaction(amt, des) {}
+    Entrada(double amt, const string &des) : Transacao(amt, des) {}
 
     void display() override {
         cout << setw(15) << "Entrada" << setw(20);
-        Transaction::display();
+        Transacao::display();
     }
 };
 
-class Despesas : public Transaction {
+class Despesas : public Transacao {
 public:
-    Despesas(double amt, const string &des) : Transaction(amt, des) {}
+    Despesas(double amt, const string &des) : Transacao(amt, des) {}
 
     void display() override {
         cout << setw(15) << "Despesas" << setw(20);
-        Transaction::display();
+        Transacao::display();
     }
 };
 
@@ -99,7 +99,7 @@ public:
 
 class Gerenciador {
 public:
-    Transaction *transactions[100];
+    Transacao *Transacoes[100];
     Investimento *investimentos[50];
     int tcount;
     int icount;
@@ -109,8 +109,8 @@ public:
         icount = 0;
     }
 
-    void addTransaction(Transaction *t) {
-        transactions[tcount++] = t;
+    void addTransacao(Transacao *t) {
+        Transacoes[tcount++] = t;
     }
 
     void addInvestimento(Investimento *i) {
@@ -127,7 +127,7 @@ public:
         cout << "\n--Guardado--: \n";
         cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(20) << "Descricao" << endl;
         for (int i = 0; i < tcount; i++) {
-            transactions[i]->display();
+            Transacoes[i]->display();
         }
 
         cout << "\n--Investimentos--\n";
@@ -148,7 +148,7 @@ public:
         cin >> Balanco;
     }
 
-    void operations() {
+    void operacoes() {
         int choice = -1;
         while (choice != 0) {
             cout << "\n--OPCOES--\n";
@@ -172,7 +172,7 @@ public:
                     getline(cin, desc);
                     cout << "Saldo atual: " << Balanco << endl;
                     Balanco += amt;
-                    manager.addTransaction(new Entrada(amt, desc));
+                    manager.addTransacao(new Entrada(amt, desc));
                     cout << "Novo saldo: " << Balanco << endl;
                     break;
                 }
@@ -191,7 +191,7 @@ public:
                     getline(cin, desc);
                     cout << "Saldo atual: " << Balanco << endl;
                     Balanco -= amt;
-                    manager.addTransaction(new Despesas(amt, desc));
+                    manager.addTransacao(new Despesas(amt, desc));
                     cout << "Novo saldo: " << Balanco << endl;
                     break;
                 }
@@ -286,7 +286,7 @@ public:
 int main() {
     cout << "---Bem vindo(a) ao Sistema de Gerenciamento Financeiro!!---\n";
     User user;
-    user.operations();
+    user.operacoes();
 
     return 0;
 }
