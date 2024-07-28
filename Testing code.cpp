@@ -144,8 +144,19 @@ public:
     double Balanco;
 
     User() {
-        cout << "Digite o saldo inicial: ";
-        cin >> Balanco;
+        int numPessoas;
+        cout << "Quantas pessoas tem no seu nucleo familiar? ";
+        cin >> numPessoas;
+
+        Balanco = 0;
+        for (int i = 0; i < numPessoas; i++) {
+            double renda;
+            cout << "Digite a renda da pessoa " << i + 1 << ": ";
+            cin >> renda;
+            Balanco += renda;
+        }
+
+        cout << "Renda familiar total: " << Balanco << endl;
     }
 
     void operacoes() {
