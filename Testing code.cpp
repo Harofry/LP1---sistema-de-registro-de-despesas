@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cmath>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -31,12 +32,12 @@ public:
     }
 };
 
-class Despesas : public Transacao {
+class Despesa : public Transacao {
 public:
-    Despesas(double amt, const string &des) : Transacao(amt, des) {}
+    Despesa(double amt, const string &des) : Transacao(amt, des) {}
 
     void display() override {
-        cout << setw(15) << "Despesas" << setw(20);
+        cout << setw(15) << "Despesa" << setw(20);
         Transacao::display();
     }
 };
@@ -144,19 +145,17 @@ public:
     double Balanco;
 
     User() {
-        int numPessoas;
-        cout << "Quantas pessoas tem no seu nucleo familiar? ";
-        cin >> numPessoas;
-
-        Balanco = 0;
-        for (int i = 0; i < numPessoas; i++) {
+        int numMembros;
+        cout << "Digite quantas pessoas tem no seu núcleo familiar: ";
+        cin >> numMembros;
+        double rendafamiliar = 0.0;
+        for (int i = 0; i < numMembros; i++) {
             double renda;
             cout << "Digite a renda da pessoa " << i + 1 << ": ";
             cin >> renda;
-            Balanco += renda;
+            rendafamiliar += renda;
         }
-
-        cout << "Renda familiar total: " << Balanco << endl;
+        Balanco = rendafamiliar;
     }
 
     void operacoes() {
@@ -193,16 +192,53 @@ public:
                     string desc;
                     cout << "Digite o valor da despesa: ";
                     cin >> amt;
-                    if (Balanco - amt < 1000) {
-                        cout << "Erro: Balanco nao pode ser menor que 1000." << endl;
-                        continue;
+                    cout << "\nEscolha uma descrição para a despesa:\n";
+                    cout << "1. Contas e Habitação\n";
+                    cout << "2. Feira e Alimentação\n";
+                    cout << "3. Transporte e Passagens\n";
+                    cout << "4. Saúde e Higiene Pessoal\n";
+                    cout << "5. Educação e Assinaturas\n";
+                    cout << "6. Lazer e Restaurantes\n";
+                    cout << "7. Compras, Utensílios e Variedades\n";
+                    cout << "8. Outros\n";
+                    cout << "0. Sair\n";
+                    cout << "Escolha: ";
+                    int opcao;
+                    cin >> opcao;
+                    switch (opcao) {
+                        case 1:
+                            desc = "Contas e Habitação";
+                            break;
+                        case 2:
+                            desc = "Feira e Alimentação";
+                            break;
+                        case 3:
+                            desc = "Transporte e Passagens";
+                            break;
+                        case 4:
+                            desc = "Saúde e Higiene Pessoal";
+                            break;
+                        case 5:
+                            desc = "Educação e Assinaturas";
+                            break;
+                        case 6:
+                            desc = "Lazer e Restaurantes";
+                            break;
+                        case 7:
+                            desc = "Compras, Utensílios e Variedades";
+                            break;
+                        case 8:
+                            desc = "Outros";
+                            break;
+                        case 0:
+                            continue;
+                        default:
+                            cout << "Opção inválida!" << endl;
+                            continue;
                     }
-                    cout << "Digite a descricao: ";
-                    cin.ignore();
-                    getline(cin, desc);
                     cout << "Saldo atual: " << Balanco << endl;
                     Balanco -= amt;
-                    manager.addTransacao(new Despesas(amt, desc));
+                    manager.addTransacao(new Despesa(amt, desc));
                     cout << "Novo saldo: " << Balanco << endl;
                     break;
                 }
@@ -221,8 +257,8 @@ public:
                     cout << "--Total montante--||\n";
                     for (int i = 0; i < manager.icount; i++) {
                         Investimento *inv = manager.investimentos[i];
-                        cout << "\ninvestimento " << i + 1 << " : " << inv->andamentoMontante() << " R$" << endl;
-                        cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(20) << "Duracao" << setw(30) << "Montante mensal investido" << endl;
+                        cout << "\nInvestimento " << i + 1 << " : " << inv->andamentoMontante() << " R$" << endl;
+                        cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(20) << "Duração" << setw(30) << "Montante mensal investido" << endl;
                         inv->display();
                     }
                     break;
@@ -232,7 +268,7 @@ public:
                     break;
 
                 default:
-                    cout << "\nSem opcao disponivel :(";
+                    cout << "\nSem opção disponível :(";
                     break;
             }
         }
@@ -241,7 +277,7 @@ public:
     void makeInvestimento() {
         int sub = -1;
         while (sub != 0) {
-            cout << "\nQual das opcoes:\n";
+            cout << "\nQual das opções:\n";
             cout << "1. Poupanca\n";
             cout << "2. CC\n";
             cout << "0. Voltar\n";
@@ -258,7 +294,7 @@ public:
                         cout << "Erro: Min Balanco = 1000";
                         return;
                     }
-                    cout << "Digite a duracao em anos : ";
+                    cout << "Digite a duração em anos : ";
                     cin >> dur;
                     cout << "Digite o investimento mensal : ";
                     cin >> mensal;
@@ -276,7 +312,7 @@ public:
                         cout << "Erro: Min Balanco = 1000";
                         return;
                     }
-                    cout << "Digite a duracao em anos : ";
+                    cout << "Digite a duração em anos : ";
                     cin >> dur;
                     manager.addInvestimento(new CC(amt, dur));
                     Balanco -= amt;
@@ -287,7 +323,7 @@ public:
                     break;
 
                 default:
-                    cout << "Escolha invalida.";
+                    cout << "Escolha inválida.";
                     break;
             }
         }
