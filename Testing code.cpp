@@ -225,7 +225,7 @@ public:
                             desc = "Lazer e Restaurantes"; // Comtempla gastos de cinemas, bares, estabelecimentos de comer fora e outras modalidades de entretenimento.
                             break;
                         case 7:
-                            desc = "Compras, Utensílios e Variedades"; // Comtempla de modo geral gastos com lojas e todas suas vertentes
+                            desc = "Compras, Utensílios e Variedades"; // Comtempla de modo geral gastos com lojas e todas suas vertentes.
                             break;
                         case 8:
                             desc = "Outros"; // Tudo aquilo que não se encaixar nos citados anteriormente.
