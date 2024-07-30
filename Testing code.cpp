@@ -175,9 +175,9 @@ public:
                 case 1: {
                     double amt;
                     string desc;
-                    cout << "Qual o valor adquirido?: ";
+                    cout << "Qual o valor adquirido? ";
                     cin >> amt;
-                    cout << "Qual descrição gostaria de atribuir a esse ganho?: ";
+                    cout << "Qual descrição gostaria de atribuir a esse ganho? ";
                     cin.ignore();
                     getline(cin, desc);
                     cout << "Saldo atual: " << Balanco << endl;
@@ -192,7 +192,7 @@ public:
                     string desc;
                     cout << "Digite o valor da despesa: ";
                     cin >> amt;
-                    cout << "\nEscolha uma descrição para a despesa:\n";
+                    cout << "\nEm qual categoria pertence a despesa?\n";
                     cout << "1. Contas e Habitação\n";
                     cout << "2. Feira e Alimentação\n";
                     cout << "3. Transporte e Passagens\n";
@@ -207,28 +207,28 @@ public:
                     cin >> opcao;
                     switch (opcao) {
                         case 1:
-                            desc = "Contas e Habitação";
+                            desc = "Contas e Habitação"; // Comtempla alugueis, contas da casa e gastos de infraestrutura.
                             break;
                         case 2:
-                            desc = "Feira e Alimentação";
+                            desc = "Feira e Alimentação"; // Comtempla mercado e similares.
                             break;
                         case 3:
-                            desc = "Transporte e Passagens";
+                            desc = "Transporte e Passagens"; // Comtempla gastos com combustivel, transporte público, ubers ou até mesmo passagens aéreas.
                             break;
                         case 4:
-                            desc = "Saúde e Higiene Pessoal";
+                            desc = "Saúde e Higiene Pessoal"; // Comtempla gastos médicos, procedimentos de cuidados, academia, barbeiro, pedicure/manicure e afins.
                             break;
                         case 5:
-                            desc = "Educação e Assinaturas";
+                            desc = "Educação e Assinaturas"; // Comtempla escola, cursos, universidade ou até mesmo assinaturas de stremings e afins, estão na mesma catégoria porque são mensalidades. 
                             break;
                         case 6:
-                            desc = "Lazer e Restaurantes";
+                            desc = "Lazer e Restaurantes"; // Comtempla gastos de cinemas, bares, estabelecimentos de comer fora e outras modalidades de entretenimento.
                             break;
                         case 7:
-                            desc = "Compras, Utensílios e Variedades";
+                            desc = "Compras, Utensílios e Variedades"; // Comtempla de modo geral gastos com lojas e todas suas vertentes
                             break;
                         case 8:
-                            desc = "Outros";
+                            desc = "Outros"; // Tudo aquilo que não se encaixar nos citados anteriormente.
                             break;
                         case 0:
                             continue;
