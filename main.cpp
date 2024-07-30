@@ -1,17 +1,17 @@
-#include<iostream>
-#include<iomanip>
-#include<cmath>
+#include <iostream>
+#include <iomanip>
+#include <cmath>
 #include <string>
 
 using namespace std;
 
-class Transaction {
+class Transacao {
 protected:
     double montante;
     string descricao;
 
 public:
-    Transaction(double amt, const string &des){
+    Transacao(double amt, const string &des) {
         montante = amt;
         descricao = des;
     }
@@ -21,33 +21,33 @@ public:
     }
 };
 
-class Entrada : public Transaction {
+class Entrada : public Transacao {
 public:
-    Entrada(double amt, const string& des) : Transaction(amt, des) {}
+    Entrada(double amt, const string &des) : Transacao(amt, des) {}
 
-    void display() {
+    void display() override {
         cout << setw(15) << "Entrada" << setw(20);
-        Transaction::display();
+        Transacao::display();
     }
 };
 
-class Despesas : public Transaction {
+class Despesas : public Transacao {
 public:
-    Despesas(double amt, const string &des) : Transaction(amt, des) {}
+    Despesas(double amt, const string &des) : Transacao(amt, des) {}
 
-    void display() {
+    void display() override {
         cout << setw(15) << "Despesas" << setw(20);
-        Transaction::display();
+        Transacao::display();
     }
 };
 
-class investimento  {
+class Investimento {
 protected:
     double montante;
     int duracao;
 
 public:
-    investimento (double amt, int dur) {
+    Investimento(double amt, int dur) {
         montante = amt;
         duracao = dur;
     }
@@ -61,46 +61,46 @@ public:
     }
 };
 
-class Poupanca : public investimento  {
+class Poupanca : public Investimento {
 private:
     double mensal;
 
 public:
-    Poupanca(double amt, int dur, double monAmt) : investimento (amt, dur) {
+    Poupanca(double amt, int dur, double monAmt) : Investimento(amt, dur) {
         mensal = monAmt;
     }
 
-    void display() {
+    void display() override {
         cout << setw(15) << "Poupanca";
-        investimento ::display();
-        cout << setw(20)<<mensal << endl;
+        Investimento::display();
+        cout << setw(20) << mensal << endl;
     }
 
-    double andamentoMontante() {
-        double final = montante * pow(1 + (0.096/12), duracao*12);
+    double andamentoMontante() override {
+        double final = montante * pow(1 + (0.096 / 12), duracao * 12);
         return final + (mensal * 12 * duracao);
     }
 };
 
-class CC : public investimento  {
+class CC : public Investimento {
 public:
-    CC(double amt, int dur) : investimento (amt, dur) {}
+    CC(double amt, int dur) : Investimento(amt, dur) {}
 
-    void display() {
+    void display() override {
         cout << setw(15) << "CC";
-        investimento ::display();
+        Investimento::display();
         cout << endl;
     }
 
-    double andamentoMontante() {
+    double andamentoMontante() override {
         return montante * pow((1 + 0.071), duracao);
     }
 };
 
 class Gerenciador {
 public:
-    Transaction* transactions[100];
-    investimento * investimentos[50];
+    Transacao *Transacoes[100];
+    Investimento *investimentos[50];
     int tcount;
     int icount;
 
@@ -109,11 +109,11 @@ public:
         icount = 0;
     }
 
-    void addTransaction(Transaction* t) {
-        transactions[tcount++] = t;
+    void addTransacao(Transacao *t) {
+        Transacoes[tcount++] = t;
     }
 
-    void addinvestimento (investimento * i) {
+    void addInvestimento(Investimento *i) {
         investimentos[icount++] = i;
     }
 
@@ -125,13 +125,13 @@ public:
         cout << "\n||--Balanco--: " << Balanco << "||" << endl;
 
         cout << "\n--Guardado--: \n";
-        cout << setw(15) << "Tipo"<<setw(15)<<"Montante" << setw(20) << "Descricao" << endl;
+        cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(20) << "Descricao" << endl;
         for (int i = 0; i < tcount; i++) {
-            transactions[i]->display();
+            Transacoes[i]->display();
         }
 
         cout << "\n--Investimentos--\n";
-        cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(15) << "Duração"<<setw(30)<<"Montante mensal investido"<<endl;
+        cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(15) << "Duracao" << setw(30) << "Montante mensal investido" << endl;
         for (int i = 0; i < icount; i++) {
             investimentos[i]->display();
         }
@@ -143,19 +143,31 @@ public:
     Gerenciador manager;
     double Balanco;
 
-    User(double initialBalanco) {
-        Balanco = initialBalanco;
+    User() {
+        int numPessoas;
+        cout << "Quantas pessoas tem no seu nucleo familiar? ";
+        cin >> numPessoas;
+
+        Balanco = 0;
+        for (int i = 0; i < numPessoas; i++) {
+            double renda;
+            cout << "Digite a renda da pessoa " << i + 1 << ": ";
+            cin >> renda;
+            Balanco += renda;
+        }
+
+        cout << "Renda familiar total: " << Balanco << endl;
     }
 
-    void operations() {
+    void operacoes() {
         int choice = -1;
         while (choice != 0) {
-            cout << "\n--OPÇÕES--\n";
+            cout << "\n--OPCOES--\n";
             cout << "1. ENTRADAS\n";
             cout << "2. DESPESAS\n";
             cout << "3. INVESTIMENTOS\n";
-            cout << "4. Informações Financeiras\n";
-            cout << "5. Informações de Investimento\n";
+            cout << "4. INFORMACOES FINANCEIRAS\n";
+            cout << "5. INFORMACOES DE INVESTIMENTO\n";
             cout << "0. Sair\n";
             cout << "Escolha : ";
             cin >> choice;
@@ -164,35 +176,39 @@ public:
                 case 1: {
                     double amt;
                     string desc;
-                    cout << "Digite montante : ";
+                    cout << "Digite o valor adquirido: ";
                     cin >> amt;
-                    cout << "Digite a descricao : ";
+                    cout << "Digite a descricao: ";
                     cin.ignore();
                     getline(cin, desc);
-                    manager.addTransaction(new Entrada(amt, desc));
+                    cout << "Saldo atual: " << Balanco << endl;
                     Balanco += amt;
+                    manager.addTransacao(new Entrada(amt, desc));
+                    cout << "Novo saldo: " << Balanco << endl;
                     break;
                 }
 
                 case 2: {
                     double amt;
                     string desc;
-                    cout << "Digite montante: ";
+                    cout << "Digite o valor da despesa: ";
                     cin >> amt;
                     if (Balanco - amt < 1000) {
-                        cout << "Erro: Balanco não pode ser menor que 1000." << endl;
+                        cout << "Erro: Balanco nao pode ser menor que 1000." << endl;
                         continue;
                     }
-                    cin.ignore();
                     cout << "Digite a descricao: ";
+                    cin.ignore();
                     getline(cin, desc);
-                    manager.addTransaction(new Despesas(amt, desc));
+                    cout << "Saldo atual: " << Balanco << endl;
                     Balanco -= amt;
+                    manager.addTransacao(new Despesas(amt, desc));
+                    cout << "Novo saldo: " << Balanco << endl;
                     break;
                 }
 
                 case 3: {
-                    makeinvestimento ();
+                    makeInvestimento();
                     break;
                 }
 
@@ -204,9 +220,9 @@ public:
                 case 5: {
                     cout << "--Total montante--||\n";
                     for (int i = 0; i < manager.icount; i++) {
-                        investimento * inv = manager.investimentos[i];
-                        cout << "\ninvestimento  " << i + 1 << " : " << inv->andamentoMontante() << " R$" << endl;
-                        cout<<setw(15)<<"Tipo"<<setw(15)<<"Montante"<<setw(20)<<"Duração"<<setw(30)<<"Montante mensal investido"<<endl;
+                        Investimento *inv = manager.investimentos[i];
+                        cout << "\ninvestimento " << i + 1 << " : " << inv->andamentoMontante() << " R$" << endl;
+                        cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(20) << "Duracao" << setw(30) << "Montante mensal investido" << endl;
                         inv->display();
                     }
                     break;
@@ -216,16 +232,16 @@ public:
                     break;
 
                 default:
-                    cout << "\nSem opção disponivel :(";
+                    cout << "\nSem opcao disponivel :(";
                     break;
             }
         }
     }
 
-    void makeinvestimento () {
+    void makeInvestimento() {
         int sub = -1;
         while (sub != 0) {
-            cout << "\nQual dais:\n";
+            cout << "\nQual das opcoes:\n";
             cout << "1. Poupanca\n";
             cout << "2. CC\n";
             cout << "0. Voltar\n";
@@ -239,14 +255,14 @@ public:
                     cout << "Digite montante : ";
                     cin >> amt;
                     if (Balanco - amt < 1000) {
-                        cout << "Erro : Min Balanco=1000";
+                        cout << "Erro: Min Balanco = 1000";
                         return;
                     }
-                    cout << "Digite a duração em anos : ";
+                    cout << "Digite a duracao em anos : ";
                     cin >> dur;
                     cout << "Digite o investimento mensal : ";
                     cin >> mensal;
-                    manager.addinvestimento (new Poupanca(amt, dur, mensal));
+                    manager.addInvestimento(new Poupanca(amt, dur, mensal));
                     Balanco -= amt;
                     break;
                 }
@@ -257,12 +273,12 @@ public:
                     cout << "Digite montante : ";
                     cin >> amt;
                     if (Balanco - amt < 1000) {
-                        cout << "Erro: Min Balanco=1000";
+                        cout << "Erro: Min Balanco = 1000";
                         return;
                     }
-                    cout << "Digite a duração em anso : ";
+                    cout << "Digite a duracao em anos : ";
                     cin >> dur;
-                    manager.addinvestimento (new CC(amt, dur));
+                    manager.addInvestimento(new CC(amt, dur));
                     Balanco -= amt;
                     break;
                 }
@@ -280,8 +296,8 @@ public:
 
 int main() {
     cout << "---Bem vindo(a) ao Sistema de Gerenciamento Financeiro!!---\n";
-    User user(2000);
-    user.operations();
+    User user;
+    user.operacoes();
 
     return 0;
 }
