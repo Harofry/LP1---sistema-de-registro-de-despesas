@@ -175,9 +175,9 @@ public:
                 case 1: {
                     double amt;
                     string desc;
-                    cout << "Digite o valor adquirido: ";
+                    cout << "Qual o valor adquirido?: ";
                     cin >> amt;
-                    cout << "Digite a descricao: ";
+                    cout << "Qual descrição gostaria de atribuir a esse ganho?: ";
                     cin.ignore();
                     getline(cin, desc);
                     cout << "Saldo atual: " << Balanco << endl;
