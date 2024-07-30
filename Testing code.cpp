@@ -125,7 +125,7 @@ public:
 
         cout << "\n||--Balanco--: " << Balanco << "||" << endl;
 
-        cout << "\n--Guardado--: \n";
+        cout << "\n--Fluxo de caixa--: \n";
         cout << setw(15) << "Tipo" << setw(15) << "Montante" << setw(20) << "Descricao" << endl;
         for (int i = 0; i < tcount; i++) {
             Transacoes[i]->display();
