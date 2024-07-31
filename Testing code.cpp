@@ -219,7 +219,7 @@ public:
                             desc = "Saúde e Higiene Pessoal"; // Contempla gastos médicos, procedimentos de cuidados, academia, barbeiro, pedicure/manicure e afins.
                             break;
                         case 5:
-                            desc = "Educação e Assinaturas"; // Contempla escola, cursos, universidade ou até mesmo assinaturas de stremings e afins, estão na mesma catégoria porque são mensalidades. 
+                            desc = "Educação e Assinaturas";  // Contempla escola, cursos, universidade ou até mesmo assinaturas de streamings e afins, estão na mesma categoria porque são mensalidades. 
                             break;
                         case 6:
                             desc = "Lazer e Restaurantes"; // Contempla gastos de cinemas, bares, estabelecimentos de comer fora e outras modalidades de entretenimento.
