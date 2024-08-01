@@ -2,4 +2,4 @@
 
 ## Um aplicativo para registrar e categorizar despesas pessoais, incluir e analisar investimentos com relatórios de gastos de maneira intuitiva.
 
-### Grupo 12: Alysson, Gabriel e João
+### Grupo 12: Alysson Nicacio, Gabriel Giulian e João Marcos
